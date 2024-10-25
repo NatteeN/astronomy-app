@@ -14,7 +14,7 @@ const App = () => {
   const dates = Array.from({ length: 12 }, (_, i) => `${i + 1}`);
 
   const calculate = () => {
-    setData(CalculatedData);
+    console.log("Calculating logic here");
   };
 
   return (
