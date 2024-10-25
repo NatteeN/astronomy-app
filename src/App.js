@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import MapPopup from "./components/MapPopup";
+import Dropdown from "./components/Dropdown";
+import DataTable from "./components/DataTable";
+import MonthYearPicker from "./components/MonthYearPicker";
 
-function App() {
+const App = () => {
+  const [coordinates, setCoordinates] = useState(null);
+  const [selectedObject, setSelectedObject] = useState('');
+  const [monthYear, setMonthYear] = useState({ month: '', year: '' });
+  const [data, setData] = useState([]);
+
+  const objects = ['ดวงอาทิตย์', 'ดวงจันทร์', 'ดาวพุธ', 'ดาวศุกร์', 'ดาวอังคาร', 'ดาวพฤหัสบดี', 'ดาวเสาร์', 'ดาวเนปจูน', 'ดาวยูเรนัส'];
+  const dates = Array.from({ length: 12 }, (_, i) => `${i + 1}`);
+
+  const calculate = () => {
+    setData(CalculatedData);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Astronomy App</h1>
+      <MapPopup setCoordinates={setCoordinates}/>
+      <label>เลือกวัตถุและเดือน-ปีที่ต้องการทราบข้อมูล</label>
+      <Dropdown options={objects} onChange={(e) => setSelectedObject(e.target.value)} lable="วัตถุท้องฟ้า"/>
+      <MonthYearPicker setSelectedMonthYear={setMonthYear}/>
+      <button onClick={handleCalculate}>แสดงข้อมูล</button>
+      <DataTable data={data}/>
     </div>
   );
-}
+
+};
 
 export default App;
