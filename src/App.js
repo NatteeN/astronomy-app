@@ -24,7 +24,7 @@ const App = () => {
       <label>เลือกวัตถุและเดือน-ปีที่ต้องการทราบข้อมูล</label>
       <Dropdown options={objects} onChange={(e) => setSelectedObject(e.target.value)} lable="วัตถุท้องฟ้า"/>
       <MonthYearPicker setSelectedMonthYear={setMonthYear}/>
-      <button onClick={calculates}>แสดงข้อมูล</button>
+      <button onClick={calculate}>แสดงข้อมูล</button>
       <DataTable data={data}/>
     </div>
   );
