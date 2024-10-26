@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { addMonths, format } from 'date-fns';
 
 const MonthYearPicker = ({ setSelectedMonthYear }) => {
     const [startDate, setStartDate] = useState(null);
@@ -20,7 +19,7 @@ const MonthYearPicker = ({ setSelectedMonthYear }) => {
             selected={startDate}
             onChange={handleDateChange}
             showMonthYearPicker
-            dateFormat="MM/yyyy"
+            dateFormat="MM-yyyy"
             placeholderText="เลือกเดือนและปี"/>
     );
     
