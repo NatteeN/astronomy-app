@@ -36,9 +36,14 @@ const DataTable = ({ data, selectedObject, isDataDisplayed }) => {
                         {isDataDisplayed && selectedObject === 'ดวงจันทร์' && (
                             <td>
                                 {item.phase !== null && item.phase !== undefined 
-                                    ? (item.phase * 100).toFixed(0) + '%'
+                                    ? (item.phase * 100).toFixed(0) + `%`
                                     : '–'}
                             </td>
+                            // <td>
+                            // {item.phase !== null && item.phase !== undefined 
+                            //     ? (item.phase * 100).toFixed(0) + `% (${item.phaseThai})`
+                            //     : '–'}
+                            // </td>
                         )}
                         <td>{item.highestTime ? formatTime24(item.highestTime) : "–"}</td>
                         <td>{item.altitude}°</td>

@@ -3,6 +3,7 @@ import L from 'leaflet';
 import './Modal.css';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import axios from "axios";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -78,6 +79,18 @@ const Modal = ({ isOpen, onClose, setCoordinates }) => {
     );
 };
 
+const getCityName = async (lat, lng) => {
+    try {
+        const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`);
+        const address = response.data.address;
+        const city = address.city || address.town || address.village || 'Unknown location';
+        return city;
+    } catch (error) {
+        console.error("Error fetching city name:", error);
+        return 'Error retrieving location';
+    }
+};
+
 const MapClickHandler = ({ onMapClick }) => {
     useMapEvents({
       click: onMapClick,
@@ -86,3 +99,4 @@ const MapClickHandler = ({ onMapClick }) => {
   };
 
 export default Modal;
+export {getCityName};
