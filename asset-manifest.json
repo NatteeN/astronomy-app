@@ -1,15 +1,21 @@
 {
   "files": {
-    "main.css": "/astronomy-app/static/css/main.a315ff8b.css",
-    "main.js": "/astronomy-app/static/js/main.b4b4864c.js",
+    "main.css": "/astronomy-app/static/css/main.815a3982.css",
+    "main.js": "/astronomy-app/static/js/main.4f73dfc2.js",
+    "static/js/239.3d2aa7f1.chunk.js": "/astronomy-app/static/js/239.3d2aa7f1.chunk.js",
+    "static/js/213.24f21217.chunk.js": "/astronomy-app/static/js/213.24f21217.chunk.js",
+    "static/js/732.74980b55.chunk.js": "/astronomy-app/static/js/732.74980b55.chunk.js",
     "static/js/453.ff037a80.chunk.js": "/astronomy-app/static/js/453.ff037a80.chunk.js",
     "index.html": "/astronomy-app/index.html",
-    "main.a315ff8b.css.map": "/astronomy-app/static/css/main.a315ff8b.css.map",
-    "main.b4b4864c.js.map": "/astronomy-app/static/js/main.b4b4864c.js.map",
+    "main.815a3982.css.map": "/astronomy-app/static/css/main.815a3982.css.map",
+    "main.4f73dfc2.js.map": "/astronomy-app/static/js/main.4f73dfc2.js.map",
+    "239.3d2aa7f1.chunk.js.map": "/astronomy-app/static/js/239.3d2aa7f1.chunk.js.map",
+    "213.24f21217.chunk.js.map": "/astronomy-app/static/js/213.24f21217.chunk.js.map",
+    "732.74980b55.chunk.js.map": "/astronomy-app/static/js/732.74980b55.chunk.js.map",
     "453.ff037a80.chunk.js.map": "/astronomy-app/static/js/453.ff037a80.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a315ff8b.css",
-    "static/js/main.b4b4864c.js"
+    "static/css/main.815a3982.css",
+    "static/js/main.4f73dfc2.js"
   ]
 }
