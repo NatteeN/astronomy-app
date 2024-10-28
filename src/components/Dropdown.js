@@ -4,7 +4,10 @@ const Dropdown = ({ options, onChange, label }) => {
     return (
         <div>
             <label>{label}</label>
-            <select onChange={onChange}>
+            <select onChange={onChange} defaultValue="">
+                <option value="" disabled>
+                    กรุณาเลือกวัตถุ
+                </option>
                 {options.map((option, index) => (
                     <option key={index} value={option}>
                         {option}

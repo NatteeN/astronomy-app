@@ -84,14 +84,14 @@ const App = () => {
             specificData.highestTime = highestTime.time.date;
             specificData.altitude = Math.round(highestTime.hor.altitude * 100) / 100;
             
-            // Get constellation information
-            const ra = highestTime.hor.ra;
-            const dec = highestTime.hor.dec;
-            const constellationInfo = Constellation(ra, dec);
-            const getThaiConstellationName = (englishName) => {
-              return constellations[englishName] || englishName;
-            };
-            specificData.constellation = getThaiConstellationName(constellationInfo.name);
+        // Get constellation information
+        const ra = highestTime.hor.ra;
+        const dec = highestTime.hor.dec;
+        const constellationInfo = Constellation(ra, dec);
+        const getThaiConstellationName = (englishName) => {
+          return constellations[englishName] || englishName;
+        };
+        specificData.constellation = getThaiConstellationName(constellationInfo.name);
         }
     } else {
         specificData.info = "Data not available for this object.";
@@ -143,6 +143,23 @@ const exportToPDF = () => {
   doc.save("astronomy_data.pdf");
 };
 
+const monthMap = {
+  '1': 'มกราคม',
+  '2': 'กุมภาพันธ์',
+  '3': 'มีนาคม',
+  '4': 'เมษายน',
+  '5': 'พฤษภาคม',
+  '6': 'มิถุนายน',
+  '7': 'กรกฎาคม',
+  '8': 'สิงหาคม',
+  '9': 'กันยายน',
+  '10': 'ตุลาคม',
+  '11': 'พฤศจิกายน',
+  '12': 'ธันวาคม'
+};
+
+const THmonth = monthMap[monthYear.month]
+
   return (
     <div>
       <h1>Astronomy App</h1>
@@ -153,7 +170,9 @@ const exportToPDF = () => {
       <Dropdown options={objects} onChange={handleObjectChange} label="วัตถุท้องฟ้า"/>
       <MonthYearPicker setSelectedMonthYear={setMonthYear}/>
       <button onClick={calculate}>แสดงข้อมูล</button>
-      {/* {data.length > 0 && <DataTable data={data} selectedObject={selectedObject} />} */}
+      {isDataDisplayed && selectedObject && (
+        <h3>ตารางแสดงข้อมูลของ{selectedObject} เดือน{THmonth} ปี {monthYear.year + 543}</h3>
+      )}
       {isDataDisplayed && data.length > 0 && (
         <DataTable data={data} selectedObject={selectedObject} isDataDisplayed={isDataDisplayed} />
       )}
