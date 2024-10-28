@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import "jspdf-autotable";
 import './App.css';
 import axios from 'axios';
+import { Helmet } from "react-helmet";
 
 const App = () => {
   const [coordinates, setCoordinates] = useState(null);
@@ -258,6 +259,7 @@ const THmonth = monthMap[displayMonth]
 
   return (
     <div>
+      <Helmet><title>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้าตามตำแหน่ง</title></Helmet>
       <h2>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้าตามตำแหน่ง</h2>
       <section class="location">
         <div class="location">
