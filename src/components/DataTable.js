@@ -23,7 +23,7 @@ const DataTable = ({ data, selectedObject, isDataDisplayed }) => {
                     {isDataDisplayed && selectedObject === 'ดวงจันทร์' && <th>ดิถี</th>}
                     <th>เวลาที่มีตำแหน่งสูงสุด</th>
                     <th>ความสูง ณ ตำแหน่งสูงสุด</th>
-                    <th>กลุ่มดาว</th>
+                    <th>กลุ่มดาว ณ ตำแหน่งสูงสุด</th>
                 </tr>
             </thead>
             <tbody>

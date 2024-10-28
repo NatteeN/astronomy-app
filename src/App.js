@@ -127,11 +127,11 @@ const App = () => {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(monthYear.year, monthYear.month - 1, day);
-      // console.log("Date:", date);
-      const dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      console.log("Date:", date);
+      // const dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       // console.log("Date UTC:", dateUTC);
-      const astroTime = new AstroTime(dateUTC);
-      // console.log("Date Astro:", astroTime);
+      const astroTime = new AstroTime(date);
+      console.log("Date Astro:", astroTime);
 
       let specificData = { date: date, object: selectedObject };
 
@@ -151,15 +151,23 @@ const App = () => {
 
       if (body) {
         // Get rise and set times
-        const riseSet = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
-        if (riseSet) {
-            specificData.rise = riseSet.date;
+        if (selectedObject === 'ดวงจันทร์') {
+            const riseSet = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
+            if (riseSet) {
+                specificData.rise = riseSet.date;
+            }
+
+        } else {
+            const riseSet = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
+            if (riseSet) {
+                specificData.rise = riseSet.date;
+            }
         }
 
         const setResult = SearchRiseSet(body, observer, -1, astroTime, 1, 0);
-        if (setResult) {
-            specificData.set = setResult.date;
-        }
+            if (setResult) {
+                specificData.set = setResult.date;
+            }
 
         // Special calculations for the Moon
         if (selectedObject === 'ดวงจันทร์') {
