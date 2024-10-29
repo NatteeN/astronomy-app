@@ -16,23 +16,32 @@ const DataTable = ({ data, selectedObject, isDataDisplayed }) => {
         <table>
             <thead>
                 <tr>
-                    <th>วันที่</th>
-                    <th>วัตถุ</th>
-                    <th>ขึ้น</th>
-                    <th>ตก</th>
-                    {isDataDisplayed && selectedObject === 'ดวงจันทร์' && <th>ดิถี</th>}
-                    <th>เวลาที่มีตำแหน่งสูงสุด</th>
-                    <th>ความสูง ณ ตำแหน่งสูงสุด</th>
-                    <th>กลุ่มดาว ณ ตำแหน่งสูงสุด</th>
+                    <th rowspan="2">วันที่</th>
+                    <th rowspan="2">วัตถุ</th>
+                    <th colspan="2">ขึ้น</th>
+                    <th colspan="2">ตก</th>
+                    {isDataDisplayed && selectedObject === 'ดวงจันทร์' && <th rowspan="2">ดิถี</th>}
+                    <th colspan="3">ตำแหน่งสูงสุดบนท้องฟ้า</th>
+                </tr>
+                <tr>
+                    <th>เวลา</th>
+                    <th>มุม</th>
+                    <th>เวลา</th>
+                    <th>มุม</th>
+                    <th>เวลา</th>
+                    <th>มุม</th>
+                    <th>อยู่ในกลุ่มดาว</th>
                 </tr>
             </thead>
             <tbody>
                 {data.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.date.toLocaleDateString('th-TH')}</td>
+                        <td>{item.date.toLocaleDateString('th-TH')} ({item.date.toLocaleDateString('th-TH', {weekday: 'short'})})</td>
                         <td>{item.object}</td>
                         <td>{item.rise ? formatTime24(item.rise) : "–"}</td>
+                        <td>{item.riseAngle ? (item.riseAngle).toFixed(1) + `°` : "–"}</td>
                         <td>{item.set ? formatTime24(item.set) : "–"}</td>
+                        <td>{item.setAngle ? (item.setAngle).toFixed(1) + `°` : "–"}</td>
                         {isDataDisplayed && selectedObject === 'ดวงจันทร์' && (
                             <td>
                                 {item.phase !== null && item.phase !== undefined 

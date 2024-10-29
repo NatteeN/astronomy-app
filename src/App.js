@@ -3,7 +3,8 @@ import Dropdown from "./components/Dropdown";
 import DataTable from "./components/DataTable";
 import MonthYearPicker from "./components/MonthYearPicker";
 import Modal from './components/Modal';
-import { Observer, Body, SearchRiseSet, AstroTime, SearchHourAngle, Constellation, Illumination } from 'astronomy-engine';
+import BackToTop from './components/BackToTop';
+import { Observer, Body, SearchRiseSet, AstroTime, SearchHourAngle, Constellation, Illumination, Horizon, Equator } from 'astronomy-engine';
 import constellations from './components/constellation_TH.json';
 import * as XLSX from "xlsx";
 // import jsPDF from "jspdf";
@@ -63,13 +64,13 @@ const App = () => {
           } else if (address.province) {
             city = `${address.province} (${latDMS}, ${lngDMS})`;
           } else {
-            city = `ไม่ทราบชื่อสถานที่<br/>(${latDMS}, ${lngDMS})`;
+            city = `ไม่ทราบชื่อสถานที่ (${latDMS}, ${lngDMS})`;
           }
 
           setCityName(city);
         } catch (error) {
           console.error("Error fetching city name:", error);
-          setCityName('Error retrieving location');
+          setCityName('ไม่พบสถานที่');
         }
       };
       fetchCityName();
@@ -151,23 +152,37 @@ const App = () => {
 
       if (body) {
         // Get rise and set times
-        if (selectedObject === 'ดวงจันทร์') {
-            const riseSet = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
-            if (riseSet) {
-                specificData.rise = riseSet.date;
+        const riseDate = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
+        console.log("Body: ", body)
+        if (riseDate) {
+            specificData.rise = riseDate.date;
+            console.log("rise time: ", riseDate.date)
             }
-
+        if (body === 'Moon' && (!riseDate || riseDate.date === null)) {
+          specificData.riseAngle = null;
         } else {
-            const riseSet = SearchRiseSet(body, observer, 1, astroTime, 1, 0);
-            if (riseSet) {
-                specificData.rise = riseSet.date;
-            }
+          const equatorRise = Equator(body, riseDate.date, observer, true, true);
+          const getHorizonRise = Horizon(riseDate.date, observer, equatorRise.ra, equatorRise.dec, "jplhor");
+          
+          if (getHorizonRise) {
+              specificData.riseAngle = getHorizonRise.azimuth;
+          }
         }
 
-        const setResult = SearchRiseSet(body, observer, -1, astroTime, 1, 0);
-            if (setResult) {
-                specificData.set = setResult.date;
+        const setDate = SearchRiseSet(body, observer, -1, astroTime, 1, 0);
+            if (setDate) {
+                specificData.set = setDate.date;
             }
+        if (body === 'Moon' && (!setDate || setDate.date === null)) {
+          specificData.setAngle = null;
+        } else {
+          const equatorSet = Equator(body, setDate.date, observer, true, true);
+          const getHorizonSet = Horizon(setDate.date, observer, equatorSet.ra, equatorSet.dec, "jplhor");
+          
+          if (getHorizonSet) {
+              specificData.setAngle = getHorizonSet.azimuth;
+          }
+        }
 
         // Special calculations for the Moon
         if (selectedObject === 'ดวงจันทร์') {
@@ -267,11 +282,11 @@ const THmonth = monthMap[displayMonth]
 
   return (
     <div>
-      <Helmet><title>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้าตามตำแหน่ง</title></Helmet>
-      <h2>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้าตามตำแหน่ง</h2>
+      <Helmet><title>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้า</title></Helmet>
+      <h2>ค้นหาเวลาขึ้นตกของวัตถุท้องฟ้า</h2>
       <section class="location">
         <div class="location">
-          <button class="location" onClick={() => setIsModalOpen(true)}><svg
+          <button class="location-button" onClick={() => setIsModalOpen(true)}><svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -286,7 +301,6 @@ const THmonth = monthMap[displayMonth]
                                 d="M12 2C8.686 2 6 5.372 6 9c0 4.418 6 11 6 11s6-6.582 6-11c0-3.628-2.686-7-6-7zm0 3a3 3 0 100 6 3 3 0 000-6z"
                                 />
                             </svg></button>
-          {/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} setCoordinates={setCoordinates} /> */}
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} setCoordinates={setCoordinates} /> {cityName}
         </div>
       </section>
@@ -304,8 +318,9 @@ const THmonth = monthMap[displayMonth]
         <DataTable data={data} selectedObject={selectedObject} isDataDisplayed={isDataDisplayed} />
       )}
       <button onClick={exportToExcel}>Export to Excel</button>
-      <button onClick={() => window.print()}>Print Table</button>
+      <button onClick={() => window.print()}>พิมพ์</button>
       {/* <button onClick={exportToPDF}>Export to PDF</button> */}
+      <BackToTop />
     </div>
   );
 
